@@ -1,0 +1,95 @@
+PC Dashboard Setup Log 
+Run Date: Tue 03/10/2026 19:36:16.77 
+Root Dir: C:\pc-dashboard\ 
+ 
+[STEP 1] Checking Python... 
+  OK: Python 3.13.12 
+ 
+[STEP 2] Checking Node.js... 
+  OK Node: v24.14.0 
+  OK npm:  11.9.0 
+ 
+[STEP 3] Checking .env... 
+  .env already exists. 
+ 
+[STEP 4] Creating venv at C:\pc-dashboard\backend\.venv 
+  Venv already exists. 
+ 
+[STEP 5] Upgrading pip... 
+Requirement already satisfied: pip in .\backend\.venv\Lib\site-packages (26.0.1)
+  pip upgraded. 
+ 
+[STEP 6] pip install packages... 
+Requirement already satisfied: fastapi==0.111.0 in .\backend\.venv\Lib\site-packages (0.111.0)
+Requirement already satisfied: uvicorn==0.30.1 in .\backend\.venv\Lib\site-packages (from uvicorn[standard]==0.30.1) (0.30.1)
+Requirement already satisfied: websockets==12.0 in .\backend\.venv\Lib\site-packages (12.0)
+Requirement already satisfied: psutil==5.9.8 in .\backend\.venv\Lib\site-packages (5.9.8)
+Requirement already satisfied: mss==9.0.1 in .\backend\.venv\Lib\site-packages (9.0.1)
+Requirement already satisfied: Pillow==11.1.0 in .\backend\.venv\Lib\site-packages (11.1.0)
+Requirement already satisfied: pygetwindow==0.0.9 in .\backend\.venv\Lib\site-packages (0.0.9)
+Requirement already satisfied: discord.py==2.3.2 in .\backend\.venv\Lib\site-packages (2.3.2)
+Requirement already satisfied: python-dotenv==1.0.1 in .\backend\.venv\Lib\site-packages (1.0.1)
+Requirement already satisfied: aiohttp==3.11.12 in .\backend\.venv\Lib\site-packages (3.11.12)
+Requirement already satisfied: pydantic==2.10.6 in .\backend\.venv\Lib\site-packages (2.10.6)
+Requirement already satisfied: pydantic-settings==2.7.0 in .\backend\.venv\Lib\site-packages (2.7.0)
+Requirement already satisfied: numpy==2.2.3 in .\backend\.venv\Lib\site-packages (2.2.3)
+Requirement already satisfied: starlette<0.38.0,>=0.37.2 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (0.37.2)
+Requirement already satisfied: typing-extensions>=4.8.0 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (4.15.0)
+Requirement already satisfied: fastapi-cli>=0.0.2 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (0.0.24)
+Requirement already satisfied: httpx>=0.23.0 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (0.28.1)
+Requirement already satisfied: jinja2>=2.11.2 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (3.1.6)
+Requirement already satisfied: python-multipart>=0.0.7 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (0.0.22)
+Requirement already satisfied: ujson!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0,>=4.0.1 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (5.11.0)
+Requirement already satisfied: orjson>=3.2.1 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (3.11.7)
+Requirement already satisfied: email_validator>=2.0.0 in .\backend\.venv\Lib\site-packages (from fastapi==0.111.0) (2.3.0)
+Requirement already satisfied: annotated-types>=0.6.0 in .\backend\.venv\Lib\site-packages (from pydantic==2.10.6) (0.7.0)
+Requirement already satisfied: pydantic-core==2.27.2 in .\backend\.venv\Lib\site-packages (from pydantic==2.10.6) (2.27.2)
+Requirement already satisfied: click>=7.0 in .\backend\.venv\Lib\site-packages (from uvicorn==0.30.1->uvicorn[standard]==0.30.1) (8.3.1)
+Requirement already satisfied: h11>=0.8 in .\backend\.venv\Lib\site-packages (from uvicorn==0.30.1->uvicorn[standard]==0.30.1) (0.16.0)
+Requirement already satisfied: pyrect in .\backend\.venv\Lib\site-packages (from pygetwindow==0.0.9) (0.2.0)
+Requirement already satisfied: aiohappyeyeballs>=2.3.0 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (2.6.1)
+Requirement already satisfied: aiosignal>=1.1.2 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (1.4.0)
+Requirement already satisfied: attrs>=17.3.0 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (25.4.0)
+Requirement already satisfied: frozenlist>=1.1.1 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (1.8.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (6.7.1)
+Requirement already satisfied: propcache>=0.2.0 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (0.4.1)
+Requirement already satisfied: yarl<2.0,>=1.17.0 in .\backend\.venv\Lib\site-packages (from aiohttp==3.11.12) (1.23.0)
+Requirement already satisfied: colorama>=0.4 in .\backend\.venv\Lib\site-packages (from uvicorn[standard]==0.30.1) (0.4.6)
+Requirement already satisfied: httptools>=0.5.0 in .\backend\.venv\Lib\site-packages (from uvicorn[standard]==0.30.1) (0.7.1)
+Requirement already satisfied: pyyaml>=5.1 in .\backend\.venv\Lib\site-packages (from uvicorn[standard]==0.30.1) (6.0.3)
+Requirement already satisfied: watchfiles>=0.13 in .\backend\.venv\Lib\site-packages (from uvicorn[standard]==0.30.1) (1.1.1)
+Requirement already satisfied: anyio<5,>=3.4.0 in .\backend\.venv\Lib\site-packages (from starlette<0.38.0,>=0.37.2->fastapi==0.111.0) (4.12.1)
+Requirement already satisfied: idna>=2.8 in .\backend\.venv\Lib\site-packages (from anyio<5,>=3.4.0->starlette<0.38.0,>=0.37.2->fastapi==0.111.0) (3.11)
+Requirement already satisfied: dnspython>=2.0.0 in .\backend\.venv\Lib\site-packages (from email_validator>=2.0.0->fastapi==0.111.0) (2.8.0)
+Requirement already satisfied: typer>=0.16.0 in .\backend\.venv\Lib\site-packages (from fastapi-cli>=0.0.2->fastapi==0.111.0) (0.24.1)
+Requirement already satisfied: rich-toolkit>=0.14.8 in .\backend\.venv\Lib\site-packages (from fastapi-cli>=0.0.2->fastapi==0.111.0) (0.19.7)
+Requirement already satisfied: certifi in .\backend\.venv\Lib\site-packages (from httpx>=0.23.0->fastapi==0.111.0) (2026.2.25)
+Requirement already satisfied: httpcore==1.* in .\backend\.venv\Lib\site-packages (from httpx>=0.23.0->fastapi==0.111.0) (1.0.9)
+Requirement already satisfied: MarkupSafe>=2.0 in .\backend\.venv\Lib\site-packages (from jinja2>=2.11.2->fastapi==0.111.0) (3.0.3)
+Requirement already satisfied: rich>=13.7.1 in .\backend\.venv\Lib\site-packages (from rich-toolkit>=0.14.8->fastapi-cli>=0.0.2->fastapi==0.111.0) (14.3.3)
+Requirement already satisfied: markdown-it-py>=2.2.0 in .\backend\.venv\Lib\site-packages (from rich>=13.7.1->rich-toolkit>=0.14.8->fastapi-cli>=0.0.2->fastapi==0.111.0) (4.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in .\backend\.venv\Lib\site-packages (from rich>=13.7.1->rich-toolkit>=0.14.8->fastapi-cli>=0.0.2->fastapi==0.111.0) (2.19.2)
+Requirement already satisfied: mdurl~=0.1 in .\backend\.venv\Lib\site-packages (from markdown-it-py>=2.2.0->rich>=13.7.1->rich-toolkit>=0.14.8->fastapi-cli>=0.0.2->fastapi==0.111.0) (0.1.2)
+Requirement already satisfied: shellingham>=1.3.0 in .\backend\.venv\Lib\site-packages (from typer>=0.16.0->fastapi-cli>=0.0.2->fastapi==0.111.0) (1.5.4)
+Requirement already satisfied: annotated-doc>=0.0.2 in .\backend\.venv\Lib\site-packages (from typer>=0.16.0->fastapi-cli>=0.0.2->fastapi==0.111.0) (0.0.4)
+  All Python packages installed OK. 
+ 
+[STEP 7] npm install... 
+
+up to date, audited 178 packages in 2s
+
+25 packages are looking for funding
+  run `npm fund` for details
+
+2 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+  npm install OK. 
+ 
+[STEP 8] Launching... 
+SETUP COMPLETE 
+Backend:  http://localhost:8000 
+Frontend: http://localhost:3000 

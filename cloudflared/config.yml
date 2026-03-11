@@ -1,0 +1,42 @@
+# cloudflared/config.yml
+# ───────────────────────────────────────────────────────────────────────────
+# Cloudflare Tunnel configuration.
+#
+# Pre-requisites:
+#   1. `cloudflared login` on your host to authenticate with your Cloudflare account.
+#   2. `cloudflared tunnel create pc-dashboard` → note the UUID it prints.
+#   3. Copy the credentials JSON to ./cloudflared/credentials.json
+#   4. Replace YOUR_TUNNEL_UUID and your.domain.com below.
+#   5. Add a CNAME record in Cloudflare DNS:
+#        dashboard.your.domain.com  →  YOUR_TUNNEL_UUID.cfargotunnel.com
+# ───────────────────────────────────────────────────────────────────────────
+
+tunnel: YOUR_TUNNEL_UUID
+credentials-file: /etc/cloudflared/credentials.json
+
+# Logging
+loglevel: info
+logfile: /var/log/cloudflared.log
+
+# Origin (points at the nginx frontend container on the Docker network)
+ingress:
+  # Main dashboard route
+  - hostname: dashboard.your.domain.com
+    service: http://frontend:80
+    originRequest:
+      # Allow long-lived WebSocket connections
+      noTLSVerify: false
+      connectTimeout: 10s
+      TCPKeepAlive: 30s
+      keepAliveConnections: 10
+      keepAliveTimeout: 90s
+      httpHostHeader: "dashboard.your.domain.com"
+
+  # Health-check route (optional – useful for monitoring)
+  - hostname: dashboard-health.your.domain.com
+    service: http://backend:8000
+    originRequest:
+      noTLSVerify: false
+
+  # Catch-all: returns 404 for any other hostname
+  - service: http_status:404

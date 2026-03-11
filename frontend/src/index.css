@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset & Base ─────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: #020408;
+  color: #e8edf5;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar styling ────────────────────────────────────────────────── */
+::-webkit-scrollbar          { width: 4px; height: 4px; }
+::-webkit-scrollbar-track    { background: rgba(255,255,255,0.03); }
+::-webkit-scrollbar-thumb    { background: rgba(0,212,255,0.25); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,212,255,0.45); }
+
+/* ── Glassmorphism card ───────────────────────────────────────────────── */
+@layer components {
+  .glass-card {
+    @apply relative rounded-2xl overflow-hidden;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow:
+      0 4px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.065);
+    border-color: rgba(255, 255, 255, 0.13);
+    box-shadow:
+      0 8px 48px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    transform: translateY(-1px);
+  }
+
+  .glass-nav {
+    background: rgba(5, 13, 20, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+  }
+
+  .glass-btn {
+    @apply px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 cursor-pointer;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .glass-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+  }
+  .glass-btn.active {
+    background: rgba(0, 212, 255, 0.12);
+    border-color: rgba(0, 212, 255, 0.4);
+    color: #00d4ff;
+    box-shadow: 0 0 16px rgba(0, 212, 255, 0.15);
+  }
+
+  /* Glow variants */
+  .glow-cyan  { box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+  .glow-green { box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); }
+  .glow-amber { box-shadow: 0 0 20px rgba(255, 179, 0, 0.2); }
+  .glow-red   { box-shadow: 0 0 20px rgba(255, 71, 87, 0.2); }
+
+  /* Metric value text */
+  .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    @apply font-medium tabular-nums;
+  }
+
+  /* Status dot */
+  .status-dot {
+    @apply inline-block w-2 h-2 rounded-full;
+  }
+  .status-dot.online  { background: #00ff88; box-shadow: 0 0 6px #00ff88; }
+  .status-dot.offline { background: #ff4757; box-shadow: 0 0 6px #ff4757; }
+  .status-dot.idle    { background: #ffb300; box-shadow: 0 0 6px #ffb300; }
+}
+
+/* ── Animated background ──────────────────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Scan line overlay (optional CRT effect) ──────────────────────────── */
+.scan-overlay::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent);
+  animation: scan-line 4s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Progress bar ─────────────────────────────────────────────────────── */
+.progress-bar {
+  @apply w-full h-1.5 rounded-full overflow-hidden;
+  background: rgba(255,255,255,0.06);
+}
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-700 ease-out;
+}
+
+/* ── Recharts custom ──────────────────────────────────────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255,255,255,0.04) !important;
+}
+.recharts-tooltip-wrapper { outline: none; }
+.recharts-text { fill: rgba(255,255,255,0.5) !important; font-size: 10px !important; }

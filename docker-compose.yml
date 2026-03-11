@@ -1,0 +1,136 @@
+# docker-compose.yml
+# ───────────────────────────────────────────────────────────────────────────
+# PC Monitoring Dashboard – Full Stack
+#
+# Services:
+#   backend    – FastAPI + psutil + mss + discord.py
+#   frontend   – React/Vite → nginx SPA server + WS/API proxy
+#   cloudflared – Cloudflare Tunnel (reverse proxy / public access)
+#
+# IMPORTANT NOTES:
+#
+# Screenshots on Linux require access to a display server.
+# Three approaches:
+#
+# (A) HOST NETWORK MODE (simplest – Linux only):
+#     Uncomment `network_mode: host` under backend and set DISPLAY.
+#
+# (B) SHARE THE HOST X11 SOCKET (default below):
+#     Mounts /tmp/.X11-unix and sets DISPLAY. Run:
+#       xhost +local:docker
+#     before starting the stack.
+#
+# (C) VIRTUAL FRAMEBUFFER (headless):
+#     Add a separate Xvfb service and point DISPLAY=:99.
+#     Useful for pure CI/headless servers.
+# ───────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Python backend ────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pcdash-backend
+    restart: unless-stopped
+
+    env_file:
+      - ./backend/.env
+
+    environment:
+      # Pass the host's DISPLAY variable into the container for X11 screenshots
+      DISPLAY: "${DISPLAY:-:0}"
+
+    volumes:
+      # Mount the host X11 socket so mss/pygetwindow can see the display
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Persist nothing else – app is stateless
+
+    # Limit resources so monitoring the monitor doesn't eat the box
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 512M
+
+    networks:
+      - dashboard
+
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+    # Uncomment to use host networking instead of the X11 socket trick:
+    # network_mode: host
+
+
+  # ── React/nginx frontend ──────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pcdash-frontend
+    restart: unless-stopped
+
+    depends_on:
+      backend:
+        condition: service_healthy
+
+    ports:
+      # Expose locally on 3000 for direct access / dev convenience
+      # Behind cloudflared this port is not strictly needed
+      - "3000:80"
+
+    networks:
+      - dashboard
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+
+  # ── Cloudflare Tunnel ─────────────────────────────────────────────────────
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: pcdash-cloudflared
+    restart: unless-stopped
+
+    depends_on:
+      frontend:
+        condition: service_healthy
+
+    command: tunnel --config /etc/cloudflared/config.yml run
+
+    volumes:
+      - ./cloudflared:/etc/cloudflared:ro
+
+    networks:
+      - dashboard
+
+    # cloudflared doesn't need resource limits but being explicit is good practice
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+
+
+# ── Networks ─────────────────────────────────────────────────────────────────
+networks:
+  dashboard:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+
+
+# ── Optional: named volumes (not needed for this stateless app) ───────────────
+# volumes:
+#   cloudflared_logs:
